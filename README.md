@@ -171,7 +171,7 @@ grunt.registerTask('default', [
     'browserify'
   ]);
 ```
-参考：
+参考：  
 1.[generator-generator](https://github.com/yeoman/generator-generator)  
 2.[yeoman](http://yeoman.io/authoring/index.html)  
 3.[grunt-react](https://www.npmjs.com/package/grunt-react)
