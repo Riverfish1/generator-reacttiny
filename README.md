@@ -8,37 +8,39 @@
 我的目录是：home/mike/mywork/study/gitcode/ 
 
 2.安装generator
-安装:
-`在命令行输入：npm install -g generator-generator`
+安装:  
+`在命令行输入：npm install -g generator-generator`  
 **说明：**
-yo generator 生成器一个新的生成器的向导
-yo generator:subgenerator Name 一个以Name为名字的子生成器
+yo generator 生成器一个新的生成器的向导  
+yo generator:subgenerator Name 一个以Name为名字的子生成器  
 
-步骤一：
-`在命令行输入yo generator` 
+步骤一：  
+`在命令行输入yo generator`   
 按照向导提示输入，我的generator的名字叫reacttiny
 第一步写github名字（不填写也可以），第二步写上reacttiny即可，然后其他默认
 之后就等待生成对应的generator-reacttiny目录
 目录内容如下：
-.
-├── generators
-│   └── app
-│       ├── index.js
-│       └── templates
-│           ├── _bower.json
-│           ├── _package.json
-│           ├── editorconfig
-│           └── jshintrc
-├── .editorconfig
-├── .gitattributes
-├── .gitignore
-├── .jshintrc
-├── .travis.yml
-├── .yo-rc.json
-├── package.json
-├── README.md
-└── test
-    └── test-app.js
+
+
+    .
+    ├── generators
+    │   └── app
+    │       ├── index.js
+    │       └── templates
+    │           ├── _bower.json
+    │           ├── _package.json
+    │           ├── editorconfig
+    │           └── jshintrc
+    ├── .editorconfig
+    ├── .gitattributes
+    ├── .gitignore
+    ├── .jshintrc
+    ├── .travis.yml
+    ├── .yo-rc.json
+    ├── package.json
+    ├── README.md
+    └── test
+        └── test-app.js
 
 
 步骤二：
@@ -54,7 +56,7 @@ yo generator:subgenerator Name 一个以Name为名字的子生成器
 
 步骤四：
 命令行目录还在generator-reacttiny下，
-`在命令行输入 yo generator:subgenerator react`
+`在命令行输入 yo generator:subgenerator react`  
 注意， yo generator:subgenerator是命令，react就是我们子生成器的名字。之后会在generators目录下自动生成相应的模板文件，和app目录一模一样，此时文件夹名称叫做react
 
 步骤五：
@@ -77,24 +79,24 @@ yo generator:subgenerator Name 一个以Name为名字的子生成器
 * end - 打个命令行祝贺使用者成功了
 
 5.上传到npm
-
-    如果想将此包上传到npm上，则需要在命令行中的generator-reacttiny目录下输入
-`npm adduser` 无注册用户，按提示步骤先增加个用户
-`npm login ` 有注册，用户先登录
-`npm publish --access=publish ` 发布即可
+ 如果想将此包上传到npm上，则需要在命令行中的generator-reacttiny目录下输入  
+`npm adduser` 无注册用户，按提示步骤先增加个用户  
+`npm login ` 有注册，用户先登录  
+`npm publish --access=publish ` 发布即可  
 
 ---
 PS:在grunt中加入自动编译Jsx文件插件
 前提使用yeoman构建了项目
 
-1.在Gruntfile.js文件目录下，安装grunt-react和grunt-browserify 
-`命令行输入：npm install grunt-react --save`
-`npm install grunt-browserify --save`
+1.在Gruntfile.js文件目录下，安装grunt-react和grunt-browserify   
+`命令行输入：npm install grunt-react --save`  
+`npm install grunt-browserify --save`  
 
 2.在Gruntfile.js的watch中增加以下代码，自动监听编译jsx代码为js代码
 **指定react的jsx目录**
+  ```bash
 watch: {
-react:{
+      react:{
         files: ['<%= config.app %>/react/{,*/}*.jsx'],
         tasks: ['react:dynamic_mappings', 'react:single_js_files']
       },
@@ -103,8 +105,11 @@ react:{
         tasks: ['browserify:options']
       }
 }
+```
+
 3.在Gruntfile.js的initConfig中增加react和browserify
 **指定react的jsx目录和js的输出目录**
+```bash
  grunt.initConfig({
 react: {
       single_js_files: {
@@ -142,19 +147,22 @@ react: {
       }
     },
 });
-
+```
 4.在Gruntfile.js中加入以下两行，加载两个任务
+```bash
 grunt.loadNpmTasks('grunt-react');
 grunt.loadNpmTasks('grunt-browserify');
-
+```
 5.在grunt:serve这里加上 'react'和'browserify'
+```bash
 grunt.registerTask('serve', 'start the server and preview your app', function (target) { if (target === 'dist') { return grunt.task.run(['build', 'browserSync:dist']);
     }
 
     grunt.task.run([ 'clean:server', 'wiredep', 'concurrent:server', 'postcss', 'browserSync:livereload', 'watch', 'react', 'browserify'  ]);
   });
-
+```
 6.在默认任务里加上，可以使用`grunt --verbose --force命令`查看文件生成细节
+```bash
 grunt.registerTask('default', [
     'newer:eslint',
     'test',
@@ -162,8 +170,8 @@ grunt.registerTask('default', [
     'react',
     'browserify'
   ]);
-
+```
 参考：
-[generator-generator](https://github.com/yeoman/generator-generator)
-[yeoman](http://yeoman.io/authoring/index.html)
-[grunt-react](https://www.npmjs.com/package/grunt-react)
+1.[generator-generator](https://github.com/yeoman/generator-generator)  
+2.[yeoman](http://yeoman.io/authoring/index.html)  
+3.[grunt-react](https://www.npmjs.com/package/grunt-react)
